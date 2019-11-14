@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" >
+
+
+    <head>
+        <title>Application</title>
+        <style type ="text/css">
+        .error{border: 1px solid red;}
+        </style>
+    </head>
+
+
+    <body >
+        <h1 th:text="'Hello' + ${name}" >Hello World</h1>
+
+        <img  src="/static/avengers.png"  alt="" height="100px" width="100px" >
+        <h:hello name="${name}"/>
+<!--        <h3> ${friend} said:</h3>-->
+        <p id="row">Everything is awesome!</p>
+
+        </br>
+
+        <form th:if="${showFrom}" method="post" action="/add"   th:object="${book}">
+            <input th:field="*{title}" placeholder="title" th:cssErrorClass="error" />
+            <span th:if="${#fields.hasErrors('title')}"  th:errors="*{title}" class="errorMessage" /> </span>
+            <input th:field="*{author}" placeholder="author" th:cssErrorClass="error" />
+            <span th:if="${#fields.hasErrors('author')}"  th:errors="*{author}" class="errorMessage" /> </span>
+            <radiobutton path="author" />
+            <input type="submit" value="Add Book">
+        </form>
+
+        </br>
+        </br>
+
+
+        <a th:each="book, status : ${books}" th:href="@{/book(id= ${status.index})} " >
+            <i th:text="${book.title}" ></i> <span th:text="'by ' + ${book.author}"></span> <br/>
+        </a>
+
+        <c:forEach items= "${books}" var= "book" varStatus="i">
+           <a href="/book?id=${i.index}">
+<!--            <i> ${book.getTitle()} </i> by ${book.getAuthor()} </br>-->
+                </a>
+        </c:forEach>
+
+
+    </body>
+
+
+</html>
